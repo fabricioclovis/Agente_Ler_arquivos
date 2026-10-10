@@ -26,7 +26,7 @@ st.sidebar.header("⚙️ Configurações do Agente")
 
 model_choice = st.sidebar.selectbox(
     "Modelo Groq",
-    ["llama-3.1-8b-instant"],
+    ["gemma2-9b-it,llama-3.1-8b-instant"],
     index=0
 )
 
