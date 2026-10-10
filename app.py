@@ -26,7 +26,7 @@ st.sidebar.header("⚙️ Configurações do Agente")
 
 model_choice = st.sidebar.selectbox(
     "Modelo Groq",
-    ["gpt-oss-20b"],
+    ["openai/gpt-oss-120b", "openai/gpt-oss-20b"],
     index=0
 )
 
