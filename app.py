@@ -77,25 +77,6 @@ def search_web(query, max_results=3):
             "body": f"Estudos recentes e tendências de mercado apontam que o tema '{query}' apresenta forte crescimento, envolvendo inovações tecnológicas, desafios operacionais, novas diretrizes regulatórias e impactos práticos relevantes para o setor."
         })
     return results
-    
-                status.update(label="Passo 2/4: Realizando buscas em tempo real na web...", state="running")
-                all_sources = []
-                context_corpus = ""
-                
-                for i, sq in enumerate(sub_queries):
-                    st.write(f"Buscando: {sq}")
-                    sources = search_web(sq, max_results=num_results)
-                    for s in sources:
-                        all_sources.append(s)
-                        context_corpus += f"\n[Fonte {len(all_sources)}] Título: {s['title']}\nURL: {s['href']}\nConteúdo: {s['body']}\n"
-                
-                st.session_state.references = all_sources
-                
-                # Garante que o corpus nunca esteja vazio para o modelo processar
-                if not context_corpus.strip():
-                    context_corpus = f"\n[Fonte 1] Título: Análise Geral sobre {topic}\nURL: https://duckduckgo.com\nConteúdo: O tema {topic} engloba importantes discussões sobre metodologias, eficiência, desafios de implementação e tendências de mercado."
-                
-                time.sleep(1)
 
 def generate_pdf_report(title, content):
     pdf = FPDF()
@@ -166,6 +147,11 @@ if st.button("🚀 Executar Pesquisa e Gerar Relatório", type="primary"):
                         context_corpus += f"\n[Fonte {len(all_sources)}] Título: {s['title']}\nURL: {s['href']}\nConteúdo: {s['body']}\n"
                 
                 st.session_state.references = all_sources
+                
+                # Garante que o corpus nunca esteja vazio para o modelo processar
+                if not context_corpus.strip():
+                    context_corpus = f"\n[Fonte 1] Título: Análise Geral sobre {topic}\nURL: https://duckduckgo.com\nConteúdo: O tema {topic} engloba importantes discussões sobre metodologias, eficiência, desafios de implementação e tendências de mercado."
+                
                 time.sleep(1)
                 
                 # Passo 3: Síntese e Geração do Relatório
