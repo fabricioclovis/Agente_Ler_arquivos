@@ -4,6 +4,7 @@ from duckduckgo_search import DDGS
 from fpdf import FPDF
 import time
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -212,4 +213,4 @@ if st.session_state.report_content:
     if st.session_state.references:
         with st.expander("📚 Fontes e Links Consultados"):
             for idx, ref in enumerate(st.session_state.references, 1):
-                st.markdown(f"**[Fonte {idx}] [{ref['title']}]({ref['href']})**\n\n_{ref['body']}_")import os
+                st.markdown(f"**[Fonte {idx}] [{ref['title']}]({ref['href']})**\n\n_{ref['body']}_")
