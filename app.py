@@ -213,18 +213,3 @@ if st.session_state.report_content:
         with st.expander("📚 Fontes e Links Consultados"):
             for idx, ref in enumerate(st.session_state.references, 1):
                 st.markdown(f"**[Fonte {idx}] [{ref['title']}]({ref['href']})**\n\n_{ref['body']}_")import os
-import streamlit as st
-from groq import Groq
-from duckduckgo_search import DDGS
-from fpdf import FPDF
-import time
-from dotenv import load_dotenv
-
-# Carrega as variáveis do arquivo .env para o ambiente
-load_dotenv()
-
-st.set_page_config(
-    page_title="Agente de Pesquisa & Relatórios de IA",
-    page_icon="🤖",
-    layout="wide"
-)
