@@ -91,7 +91,7 @@ def generate_pdf_report(title, content):
                 pass
         else:
             pdf.ln(4)
-    return pdf.output()
+    return bytes(pdf.output())
 
 if st.button("🚀 Executar Pesquisa e Gerar Relatório", type="primary"):
     # Obtém a chave diretamente do ambiente (.env ou Render)
