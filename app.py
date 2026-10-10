@@ -59,16 +59,19 @@ if "references" not in st.session_state:
 def search_web(query, max_results=3):
     results = []
     try:
+        # Usar backend='lite' torna a busca do DuckDuckGo mais estável em servidores na nuvem
         with DDGS() as ddgs:
-            for r in ddgs.text(query, max_results=max_results):
+            for r in ddgs.text(query, max_results=max_results, backend='lite'):
                 results.append({
-                    "title": r.get("title"),
-                    "href": r.get("href"),
-                    "body": r.get("body")
+                    "title": r.get("title", "Sem título"),
+                    "href": r.get("href", "#"),
+                    "body": r.get("body", "Sem conteúdo")
                 })
     except Exception as e:
-        st.warning(f"Erro na busca web para '{query}': {e}")
+        st.warning(f"Aviso na busca web para '{query}': {e}")
     return results
+    if not context_corpus:
+                    context_corpus = f"Pesquisa geral realizada sobre o tema: {topic}. Foco em inovação, tendências e impactos de mercado em 2026."
 
 def generate_pdf_report(title, content):
     pdf = FPDF()
