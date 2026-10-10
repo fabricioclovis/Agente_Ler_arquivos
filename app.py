@@ -6,6 +6,7 @@ import time
 from dotenv import load_dotenv
 import os
 
+# Carrega as variáveis do ficheiro .env localmente
 load_dotenv()
 
 st.set_page_config(
@@ -20,17 +21,8 @@ st.markdown(
     "para pesquisar tópicos complexos, sintetizar informações e gerar relatórios técnicos detalhados com citações."
 )
 
-# Sidebar para Configurações
+# Sidebar para Configurações (A caixa da API Key foi removida daqui)
 st.sidebar.header("⚙️ Configurações do Agente")
-
-# Obter API Key da Groq
-api_key_env = os.environ.get("API_KEY_GROQ", "")
-api_key_input = st.sidebar.text_input(
-    "API_KEY_GROQ",
-    value=api_key_env,
-    type="password",
-    help="Insira sua chave da API da Groq aqui ou configure como variável de ambiente."
-)
 
 model_choice = st.sidebar.selectbox(
     "Modelo Groq",
@@ -48,9 +40,8 @@ num_results = st.sidebar.slider(
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📌 Instruções")
 st.sidebar.markdown(
-    "1. Insira sua **API_KEY_GROQ**.\n"
-    "2. Digite um tópico complexo.\n"
-    "3. Clique em **Executar Pesquisa e Gerar Relatório**."
+    "1. Digite um tópico complexo.\n"
+    "2. Clique em **Executar Pesquisa e Gerar Relatório**."
 )
 
 # Área Principal
@@ -103,13 +94,16 @@ def generate_pdf_report(title, content):
     return pdf.output()
 
 if st.button("🚀 Executar Pesquisa e Gerar Relatório", type="primary"):
-    if not api_key_input:
-        st.error("⚠️ Por favor, informe a **API_KEY_GROQ** na barra lateral ou via variável de ambiente.")
+    # Obtém a chave diretamente do ambiente (.env ou Render)
+    api_key = os.environ.get("API_KEY_GROQ")
+    
+    if not api_key:
+        st.error("⚠️ A variável de ambiente **API_KEY_GROQ** não foi encontrada. Configure-a no ficheiro .env ou no Render.")
     elif not topic:
         st.error("⚠️ Por favor, digite um tópico de pesquisa válido.")
     else:
         try:
-            client = Groq(api_key=api_key_input)
+            client = Groq(api_key=api_key)
             
             with st.status("🤖 Agente em execução...", expanded=True) as status:
                 
